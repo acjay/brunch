@@ -6,6 +6,17 @@
   // that use requireJS (since this is not a full version of require)
   if ( !window.Conversations ) {
     window.Conversations = {};
+
+    // lodash expects its environment to have the following builtins, so 
+    // pull them in from window
+    var builtins = [
+      'Array', 'Boolean', 'Date', 'Error', 'Function', 'Math', 'Number', 'Object',
+      'RegExp', 'String', '_', 'attachEvent', 'clearTimeout', 'isFinite', 'isNaN',
+      'parseInt', 'setImmediate', 'setTimeout'];
+
+    for ( var i = 0; i < builtins.length; i++ ) {
+      window.Conversations[builtins[i]] = window[builtins[i]];
+    }
   }
   var globals = window.Conversations;
   if (typeof globals.require === 'function') return;
